@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("Clicker.Tests")] // allowing unit tests to access internal members
+
 namespace Clicker
 {
 
@@ -36,23 +40,70 @@ namespace Clicker
         // Tiers of auto-clickers
         private readonly List<AutoClickerTier> autoClickerTiers = new()
         {
-            new AutoClickerTier { Count = 0, BaseCost = 50, CostMultiplier = 1.6, PointsPerSecondPerUnit = 1 },
-            new AutoClickerTier { Count = 0, BaseCost = 150, CostMultiplier = 1.6, PointsPerSecondPerUnit = 2 },
-            new AutoClickerTier { Count = 0, BaseCost = 400, CostMultiplier = 1.7, PointsPerSecondPerUnit = 4 },
-            new AutoClickerTier { Count = 0, BaseCost = 800, CostMultiplier = 1.8, PointsPerSecondPerUnit = 8 },
-            new AutoClickerTier { Count = 0, BaseCost = 1200, CostMultiplier = 2, PointsPerSecondPerUnit = 12 },
-
+            new AutoClickerTier { Count = 0, BaseCost = 50, CostMultiplier = 1.2, PointsPerSecondPerUnit = 1 },
+            new AutoClickerTier { Count = 0, BaseCost = 150, CostMultiplier = 1.35, PointsPerSecondPerUnit = 2 },
+            new AutoClickerTier { Count = 0, BaseCost = 400, CostMultiplier = 1.45, PointsPerSecondPerUnit = 4 },
+            new AutoClickerTier { Count = 0, BaseCost = 800, CostMultiplier = 1.6, PointsPerSecondPerUnit = 8 },
+            new AutoClickerTier { Count = 0, BaseCost = 1200, CostMultiplier = 1.85, PointsPerSecondPerUnit = 12 },
 
         };
 
-        // Backwards-compatible properties that map to tier 0 (so existing UI keeps working)
-        public int AutoClickers => autoClickerTiers.Count > 0 ? autoClickerTiers[0].Count : 0;
-        public long AutoClickerBaseCost => autoClickerTiers.Count > 0 ? autoClickerTiers[0].BaseCost : 0;
-        public double AutoClickerCostMultiplier => autoClickerTiers.Count > 0 ? autoClickerTiers[0].CostMultiplier : 1.0;
-        public long PointsPerAutoClickPerUnit => autoClickerTiers.Count > 0 ? autoClickerTiers[0].PointsPerSecondPerUnit : 0;
+        // Info about each auto-clicker tier for UI - read-only
+        public record AutoClickerTierInfo(int TierIndex, int Count, long PointsPerSecondPerUnit, long NextCost,long NextMaxCount);
 
-        public int AutoClickers2 => autoClickerTiers.Count > 1 ? autoClickerTiers[1].Count : 0;
-        public long AutoClicker2BaseCost => autoClickerTiers.Count > 1 ? autoClickerTiers[1].BaseCost : 0;
+        public IReadOnlyList<AutoClickerTierInfo> GetAutoClickerTierInfos()
+        {
+            var infos = new List<AutoClickerTierInfo>(autoClickerTiers.Count);
+            for (int i = 0; i < autoClickerTiers.Count; i++)
+            {
+                var t = autoClickerTiers[i];
+                int purchasable = CalculateMaxPurchasableForTier(i, Points);
+                infos.Add(new AutoClickerTierInfo(i, t.Count, t.PointsPerSecondPerUnit, t.GetCost(), purchasable));
+            }
+            return infos.AsReadOnly();
+        }
+
+        // how many units of `tierIndex` the supplied `availablePoints` can buy right now without changing game state.
+        public int CalculateMaxPurchasableForTier(int tierIndex, long availablePoints)
+        {
+            if (tierIndex < 0 || tierIndex >= autoClickerTiers.Count) return 0;
+
+            var tier = autoClickerTiers[tierIndex];
+            int purchases = 0;
+            int currentCount = tier.Count;
+
+            while (true)
+            {
+                double raw = tier.BaseCost * Math.Pow(tier.CostMultiplier, currentCount + purchases);
+                long cost = (long)Math.Ceiling(raw);
+                if (availablePoints >= cost)
+                {
+                    availablePoints -= cost;
+                    purchases++;
+                }
+                else {break;}
+            }
+            return purchases;
+        }
+
+        public int CalculateMaxPurchasableClickPower()
+        {   
+            long availablePoints = Points;
+            int purchases = 0;
+            int currentLevel = ClickPowerLevel;
+            while (true)
+            {
+                double raw = ClickPowerBaseCost * Math.Pow(ClickPowerCostMultiplier, currentLevel + purchases);
+                long cost = (long)Math.Ceiling(raw);
+                if (availablePoints >= cost)
+                {
+                    availablePoints -= cost;
+                    purchases++;
+                }
+                else { break; }
+            }
+            return purchases;
+        }
 
         // ————— Core actions —————
 
@@ -61,6 +112,7 @@ namespace Clicker
             Points += PointsPerClick;
         }
 
+        // buy click power upgrade
         public bool TryBuyClickPower()
         {
             long cost = GetClickPowerCost();
@@ -74,7 +126,29 @@ namespace Clicker
             return false;
         }
 
-        // buy an auto-clicker of a specific tier (0-based)
+        //Buy max amount of click power upgrade
+        public bool TryBuyMaxClickPower()
+        {
+            bool boughtAny = false;
+            while (true)
+            {
+                long cost = GetClickPowerCost();
+                if (Points >= cost)
+                {
+                    Points -= cost;
+                    ClickPowerLevel++;
+                    PointsPerClick += 1;
+                    boughtAny = true;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return boughtAny;
+        }
+
+        // Buy an auto-clicker of a specific tier (0-based)
         public bool TryBuyAutoClickerTier(int tierIndex)
         {
             if (tierIndex < 0 || tierIndex >= autoClickerTiers.Count) return false;
@@ -87,6 +161,29 @@ namespace Clicker
                 return true;
             }
             return false;
+        }
+
+        //Buy max amount of auto-clickers of a specific tier (0-based)
+        public bool TryBuyMaxAutoClicker(int tierIndex)
+        {
+            if (tierIndex < 0 || tierIndex >= autoClickerTiers.Count) return false;
+            var tier = autoClickerTiers[tierIndex];
+            bool boughtAny = false;
+            while (true)
+            {
+                long cost = tier.GetCost();
+                if (Points >= cost)
+                {
+                    Points -= cost;
+                    tier.Count++;
+                    boughtAny = true;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return boughtAny;
         }
 
         // Called by a Timer tick (e.g., once per 0.1 second)
@@ -110,6 +207,17 @@ namespace Clicker
             }
         }
 
+        //Get total auto clickers points per second
+        public long GetTotalAutoClickerPointsPerSecond()
+        {
+            long totalPps = 0;
+            foreach (var tier in autoClickerTiers)
+            {
+                totalPps += (long)tier.Count * tier.PointsPerSecondPerUnit;
+            }
+            return totalPps;
+        }
+
         // ————— Costs —————
 
         public long GetClickPowerCost()
@@ -117,13 +225,6 @@ namespace Clicker
             // cost = base * multiplier^level (rounded)
             double raw = ClickPowerBaseCost * Math.Pow(ClickPowerCostMultiplier, ClickPowerLevel);
             return (long)Math.Ceiling(raw);
-        }
-
-        // cost for arbitrary tier (0-based)
-        public long GetAutoClickerCostAt(int tierIndex)
-        {
-            if (tierIndex < 0 || tierIndex >= autoClickerTiers.Count) return long.MaxValue;
-            return autoClickerTiers[tierIndex].GetCost();
         }
 
         // ————— Reset Game—————

@@ -1,17 +1,16 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-
 namespace Clicker
 {
-    public partial class ConfirmReset : Form
+    public partial class PopUpScreen : Form
     {
         public bool UserConfirmed { get; private set; } = false;
         private readonly Style _style = new Style();
 
-        public ConfirmReset(string message, string title = "Confirm")
+        public PopUpScreen(string message, string title = "Confirm")
         {
             InitializeComponent();
             this.Text = title;
@@ -20,13 +19,11 @@ namespace Clicker
             //Make rounded corners(15px radius)
             this.Region = Region.FromHrgn(Style.NativeMethods.CreateRoundRectRgn(0, 0, Width, Height, 15, 15));
 
-
             // Style buttons
             _style.StyleButton(yesButton, Color.FromArgb(80, 180, 255));
             _style.StyleButton(noButton, Color.FromArgb(200, 200, 200));
 
             DropShadow();
-
         }
 
         private void yesButton_Click(object sender, EventArgs e)
@@ -43,7 +40,7 @@ namespace Clicker
             this.Close();
         }
 
-        private void ConfirmReset_Load(object sender, EventArgs e)
+        private void PopUpScreen_Load(object sender, EventArgs e)
         {
 
         }
@@ -54,6 +51,5 @@ namespace Clicker
             this.BackColor = Color.White;
             this.FormBorderStyle = FormBorderStyle.None;
         }
-
     }
 }

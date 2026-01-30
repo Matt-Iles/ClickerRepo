@@ -1,6 +1,6 @@
 ﻿namespace Clicker
 {
-    partial class ConfirmReset
+    partial class PopUpScreen
     {
         /// <summary>
         /// Required designer variable.
@@ -64,7 +64,7 @@
             yesButton.UseVisualStyleBackColor = true;
             yesButton.Click += yesButton_Click;
             // 
-            // ConfirmReset
+            // PopUpScreen  
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -75,10 +75,10 @@
             Controls.Add(textLabel);
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
-            Name = "ConfirmReset";
+            Name = "PopUpScreen";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Confirm Reset";
-            Load += ConfirmReset_Load;
+            Text = "PopUpScreen";
+            Load += PopUpScreen_Load;
             ResumeLayout(false);
         }
 
