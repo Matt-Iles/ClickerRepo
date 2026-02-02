@@ -1,0 +1,29 @@
+2026-01-30T17:38:13.7444606+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 1.9.1+cb5afc3bb9bb01ebd75b57f89e8358b914ee2a49
+2026-01-30T17:38:13.7580675+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-01-30T17:38:13.7591293+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-01-30T17:38:13.7591355+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 17:38:13.720
+2026-01-30T17:38:13.7592050+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 37900
+2026-01-30T17:38:13.7592294+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.2
+2026-01-30T17:38:13.7592421+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.2\System.Private.CoreLib.dll
+2026-01-30T17:38:13.7592537+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-01-30T17:38:13.7593377+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Working\Dev\Clicker\Clicker.Tests\bin\Debug\net10.0-windows7.0\Clicker.Tests.dll
+2026-01-30T17:38:13.7594925+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Working\Dev\Clicker\Clicker.Tests\bin\Debug\net10.0-windows7.0\Log --results-directory C:\Working\Dev\Clicker\Clicker\TestResults --client-port 61842'
+2026-01-30T17:38:13.7604748+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-01-30T17:38:13.7853334+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-01-30T17:38:13.8066519+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-01-30T17:38:14.2218688+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '3.2.2' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-01-30T17:38:14.2341798+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v3.2.2+728c1dce01 (64-bit .NET 10.0.2)
+2026-01-30T17:38:14.3026418+00:00 xUnit.net INFORMATION   Discovering: Clicker.Tests
+2026-01-30T17:38:14.3531155+00:00 xUnit.net INFORMATION   Discovered:  Clicker.Tests
+2026-01-30T17:38:14.4170548+00:00 xUnit.net INFORMATION   Starting:    Clicker.Tests
+2026-01-30T17:38:14.5938360+00:00 xUnit.net ERROR     Clicker.Tests.GameStateTests.BuyOneOfEachUpgrade [FAIL]
+2026-01-30T17:38:14.5945025+00:00 xUnit.net INFORMATION       Assert.Equal() Failure: Values differ
+2026-01-30T17:38:14.5945163+00:00 xUnit.net INFORMATION       Expected: 1400
+2026-01-30T17:38:14.5945176+00:00 xUnit.net INFORMATION       Actual:   1395
+2026-01-30T17:38:14.5951599+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-01-30T17:38:14.5960964+00:00 xUnit.net INFORMATION         C:\Working\Dev\Clicker\Clicker.Tests\GameStateTests.cs(111,0): at Clicker.Tests.GameStateTests.BuyOneOfEachUpgrade()
+2026-01-30T17:38:14.5961178+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-01-30T17:38:14.5961277+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-01-30T17:38:14.6160421+00:00 xUnit.net INFORMATION   Finished:    Clicker.Tests (ID = '1305b6e0cd4ee5cc3f36e1e16b64f511b6d2bb28a06fb75937adf84d8e4cc5a7')
+2026-01-30T17:38:14.6229822+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-01-30T17:38:14.6301786+00:00 xUnit.net INFORMATION    Clicker.Tests  Total: 1, Errors: 0, Failed: 1, Skipped: 0, Not Run: 0, Time: 0.238s

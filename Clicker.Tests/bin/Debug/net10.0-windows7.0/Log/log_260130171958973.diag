@@ -1,0 +1,15 @@
+2026-01-30T17:19:58.9847254+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 1.9.1+cb5afc3bb9bb01ebd75b57f89e8358b914ee2a49
+2026-01-30T17:19:59.0029787+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-01-30T17:19:59.0052016+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-01-30T17:19:59.0052166+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 17:19:58.950
+2026-01-30T17:19:59.0053268+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 28396
+2026-01-30T17:19:59.0054213+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.2
+2026-01-30T17:19:59.0054500+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.2\System.Private.CoreLib.dll
+2026-01-30T17:19:59.0054737+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-01-30T17:19:59.0057251+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Working\Dev\Clicker\Clicker.Tests\bin\Debug\net10.0-windows7.0\Clicker.Tests.dll
+2026-01-30T17:19:59.0060452+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Working\Dev\Clicker\Clicker.Tests\bin\Debug\net10.0-windows7.0\Log --results-directory C:\Working\Dev\Clicker\Clicker\TestResults --client-port 59492'
+2026-01-30T17:19:59.0082705+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-01-30T17:19:59.0325676+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-01-30T17:19:59.0539759+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-01-30T17:19:59.4211893+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '3.2.2' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-01-30T17:19:59.4378190+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v3.2.2+728c1dce01 (64-bit .NET 10.0.2)
