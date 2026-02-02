@@ -10,10 +10,7 @@
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5" />
     <PackageReference Include="Xunit.StaFact" Version="3.0.13" />
     <PackageReference Include="xunit.v3" Version="3.2.2" />
   </ItemGroup>
@@ -21,5 +18,12 @@
   <ItemGroup>
     <ProjectReference Include="..\Clicker\Clicker.csproj" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <RestoreSources>
+      https://api.nuget.org/v3/index.json;
+      $(RestoreSources)
+    </RestoreSources>
+  </PropertyGroup>
 
 </Project>

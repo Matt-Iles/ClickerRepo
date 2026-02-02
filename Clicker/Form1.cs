@@ -135,7 +135,7 @@ namespace Clicker
             if (bought)
             {
                 // Play message to confirm purchase
-                System.Media.SystemSounds.Exclamation.Play();
+                //System.Media.SystemSounds.Exclamation.Play();
             }
             RefreshUi();
         }
@@ -147,7 +147,7 @@ namespace Clicker
             if (bought)
             {
                 // Play message to confirm purchase
-                System.Media.SystemSounds.Exclamation.Play();
+                //System.Media.SystemSounds.Exclamation.Play();
             }
             RefreshUi();
         }
@@ -158,7 +158,7 @@ namespace Clicker
             if (bought)
             {
                 // Play message to confirm purchase
-                System.Media.SystemSounds.Exclamation.Play();
+                //System.Media.SystemSounds.Exclamation.Play();
             }
             RefreshUi();
         }
@@ -170,7 +170,7 @@ namespace Clicker
             if (bought)
             {
                 // Play message to confirm purchase
-                System.Media.SystemSounds.Exclamation.Play();
+                //System.Media.SystemSounds.Exclamation.Play();
             }
             RefreshUi();
         }
@@ -182,7 +182,7 @@ namespace Clicker
             if (bought)
             {
                 // Play message to confirm purchase
-                System.Media.SystemSounds.Exclamation.Play();
+                //System.Media.SystemSounds.Exclamation.Play();
             }
             RefreshUi();
         }
@@ -193,7 +193,7 @@ namespace Clicker
             if (bought)
             {
                 // Play message to confirm purchase
-                System.Media.SystemSounds.Exclamation.Play();
+                //System.Media.SystemSounds.Exclamation.Play();
             }
             RefreshUi();
         }
@@ -204,7 +204,7 @@ namespace Clicker
             if (bought)
             {
                 // Play message to confirm purchase
-                System.Media.SystemSounds.Exclamation.Play();
+                //System.Media.SystemSounds.Exclamation.Play();
             }
             RefreshUi();
         }
@@ -215,7 +215,7 @@ namespace Clicker
             if (bought)
             {
                 // Play message to confirm purchase
-                System.Media.SystemSounds.Exclamation.Play();
+                //System.Media.SystemSounds.Exclamation.Play();
             }
             RefreshUi();
         }

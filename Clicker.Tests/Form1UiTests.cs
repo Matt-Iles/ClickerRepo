@@ -32,6 +32,8 @@ namespace Clicker.Tests
             if (ex != null) throw ex;
         }
 
+
+        // Test to verify that upgrade buttons are enabled and white when affordable
         [Fact]
         public void UpgradeButtons_AreEnabledAndWhite_WhenAffordable()
         {
@@ -58,11 +60,22 @@ namespace Clicker.Tests
                 var gameField = typeof(Form1).GetField("_game", BindingFlags.Instance | BindingFlags.NonPublic);
                 var formGame = (GameState?)gameField!.GetValue(form) ?? throw new Xunit.Sdk.XunitException("_game was null");
 
-                //Check that all upgrade buttons are disabled and grey before setting points
+                //Check that all buy upgrade buttons are disabled and grey before setting points
                 foreach (var upgradeIndex in new[] { 0, 1, 2, 3 })
                 {
                     //  get the private button field and verify state
                     var btnField = typeof(Form1).GetField($"upgradeButton{upgradeIndex}", BindingFlags.Instance | BindingFlags.NonPublic);
+                    var btn = (Button?)btnField!.GetValue(form);
+                    Assert.NotNull(btn);
+                    Assert.False(btn!.Enabled);
+                    Assert.Equal(Color.DarkGray, btn.BackColor);
+                }
+
+                //Check that all upgrade buttons are disabled and grey before setting points
+                foreach (var upgradeIndex in new[] { 0, 1, 2, 3 })
+                {
+                    //  get the private button field and verify state
+                    var btnField = typeof(Form1).GetField($"maxButton{upgradeIndex}", BindingFlags.Instance | BindingFlags.NonPublic);
                     var btn = (Button?)btnField!.GetValue(form);
                     Assert.NotNull(btn);
                     Assert.False(btn!.Enabled);
@@ -77,17 +90,83 @@ namespace Clicker.Tests
                 var refresh = typeof(Form1).GetMethod("RefreshUi", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
                 refresh!.Invoke(form, null);
 
+                //Loop through all of the buy upgrade buttons and verify that they are enabled and white
                 foreach (var upgradeIndex in new[] { 0, 1, 2, 3 })
                 {
                     // get the private button field and verify state
                     var btnField = typeof(Form1).GetField($"upgradeButton{upgradeIndex}", BindingFlags.Instance | BindingFlags.NonPublic);
                     var btn = (Button?)btnField!.GetValue(form);
                     Assert.NotNull(btn);
-                    Assert.True(btn!.Enabled);
+                    Assert.True(btn.Enabled);
                     Assert.Equal(Color.White, btn.BackColor);
                 }
-               
+
+                //Loop through all of the Max buy upgrade buttons and verify that they are enabled and white
+                foreach (var upgradeIndex in new[] { 0, 1, 2, 3 })
+                {
+                    // get the private button field and verify state
+                    var btnField = typeof(Form1).GetField($"maxButton{upgradeIndex}", BindingFlags.Instance | BindingFlags.NonPublic);
+                    var btn = (Button?)btnField!.GetValue(form);
+                    Assert.NotNull(btn);
+                    Assert.True(btn.Enabled);
+                    Assert.Equal(Color.White, btn.BackColor);
+                }
                 form.Close();
+            });
+        }
+
+        // Test to verify that clicking Exit menu item shows PopUpScreen and closes form on confirmation
+        [Fact]
+        public void ExitButton_ClosesForm()
+        {
+            RunSta(() =>
+            {
+                using var form = new Form1();
+                // get the private exit menu item field
+                var btnField = typeof(Form1).GetField("exitGameToolStripMenuItem", BindingFlags.Instance | BindingFlags.NonPublic);
+                var menuItem = (ToolStripMenuItem?)btnField!.GetValue(form);
+                Assert.NotNull(menuItem);
+
+                // trigger the menu click which shows the modal PopUpScreen
+                menuItem!.PerformClick();
+
+                bool formClosed = false;
+                form.FormClosed += (s, e) => formClosed = true;
+
+                // timer runs on the UI message loop so it can interact with the modal popup
+                using var timer = new System.Windows.Forms.Timer();
+                timer.Interval = 50;
+                timer.Tick += (s, e) =>
+                {
+                    // look for the PopUpScreen in the open forms
+                    for (int i = 0; i < Application.OpenForms.Count; i++)
+                    {
+                        if (Application.OpenForms[i] is PopUpScreen popup)
+                        {
+                            timer.Stop();
+                            // click the popup's yesButton via reflection
+                            var yesField = typeof(PopUpScreen).GetField("yesButton", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                            var yesBtn = (Button?)yesField?.GetValue(popup);
+                            if (yesBtn != null)
+                            {
+                                yesBtn.PerformClick();
+                            }
+                            else
+                            {
+                                // fallback in case the control name differs
+                                popup.DialogResult = DialogResult.OK;
+                                popup.Close();
+                            }
+                            break;
+                        }
+                    }
+                };
+                timer.Start();
+
+               
+
+                // after the modal dialog is handled above, the form should close
+                Assert.True(formClosed);
             });
         }
     }
