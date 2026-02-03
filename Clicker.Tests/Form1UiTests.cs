@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Clicker;
+using System;
 using System.Drawing;
 using System.Reflection;
 using System.Threading;
+using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
-using Clicker;
+using System.Linq;
 using Xunit;
 
 namespace Clicker.Tests
@@ -122,13 +124,14 @@ namespace Clicker.Tests
             RunSta(() =>
             {
                 using var form = new Form1();
+
+                // Ensure the form is shown so modal dialogs are parented and timers tick
+                form.Show();
+
                 // get the private exit menu item field
                 var btnField = typeof(Form1).GetField("exitGameToolStripMenuItem", BindingFlags.Instance | BindingFlags.NonPublic);
                 var menuItem = (ToolStripMenuItem?)btnField!.GetValue(form);
                 Assert.NotNull(menuItem);
-
-                // trigger the menu click which shows the modal PopUpScreen
-                menuItem!.PerformClick();
 
                 bool formClosed = false;
                 form.FormClosed += (s, e) => formClosed = true;
@@ -138,35 +141,75 @@ namespace Clicker.Tests
                 timer.Interval = 50;
                 timer.Tick += (s, e) =>
                 {
-                    // look for the PopUpScreen in the open forms
-                    for (int i = 0; i < Application.OpenForms.Count; i++)
+                    var popup = Application.OpenForms.OfType<PopUpScreen>().FirstOrDefault();
+                    if (popup != null)
                     {
-                        if (Application.OpenForms[i] is PopUpScreen popup)
+                        timer.Stop();
+
+                        // click the popup's yesButton via reflection
+                        var yesField = typeof(PopUpScreen).GetField("yesButton", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                        var yesBtn = (Button?)yesField?.GetValue(popup);
+                        if (yesBtn != null)
                         {
-                            timer.Stop();
-                            // click the popup's yesButton via reflection
-                            var yesField = typeof(PopUpScreen).GetField("yesButton", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-                            var yesBtn = (Button?)yesField?.GetValue(popup);
-                            if (yesBtn != null)
-                            {
-                                yesBtn.PerformClick();
-                            }
-                            else
-                            {
-                                // fallback in case the control name differs
-                                popup.DialogResult = DialogResult.OK;
-                                popup.Close();
-                            }
-                            break;
+                            yesBtn.PerformClick();
                         }
                     }
                 };
                 timer.Start();
 
-               
+                // trigger the menu click which shows the modal PopUpScreen
+                menuItem!.PerformClick();
 
-                // after the modal dialog is handled above, the form should close
-                Assert.True(formClosed);
+                // after the modal dialog is handled above, the form should be closed
+                Assert.True(formClosed, "Form did not close after confirming exit popup");
+            });
+        }
+
+        // Test to verify that clicking Exit menu item shows PopUpScreen and keeps form open when hitting no
+        [Fact]
+        public void NoExitButton_KeepsForm()
+        {
+            RunSta(() =>
+            {
+                using var form = new Form1();
+
+                // Ensure the form is shown so modal dialogs are parented and timers tick
+                form.Show();
+
+                // get the private exit menu item field
+                var btnField = typeof(Form1).GetField("exitGameToolStripMenuItem", BindingFlags.Instance | BindingFlags.NonPublic);
+                var menuItem = (ToolStripMenuItem?)btnField!.GetValue(form);
+                Assert.NotNull(menuItem);
+
+                bool formClosed = false;
+                form.FormClosed += (s, e) => formClosed = true;
+
+                // timer runs on the UI message loop so it can interact with the modal popup
+                using var timer = new System.Windows.Forms.Timer();
+                timer.Interval = 50;
+                timer.Tick += (s, e) =>
+                {
+                    var popup = Application.OpenForms.OfType<PopUpScreen>().FirstOrDefault();
+                    if (popup != null)
+                    {
+                        timer.Stop();
+
+                        // click the popup's yesButton via reflection
+                        var noField = typeof(PopUpScreen).GetField("noButton", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                        var noBtn = (Button?)noField?.GetValue(popup);
+                        if (noBtn != null)
+                        {
+                            noBtn.PerformClick();
+                        }
+                    }
+                };
+                timer.Start();
+
+                // trigger the menu click which shows the modal PopUpScreen
+                menuItem!.PerformClick();
+
+                // after the modal dialog is handled above, the form should be closed
+                Assert.True(!formClosed, "Form closed when shouldn't have");
             });
         }
     }

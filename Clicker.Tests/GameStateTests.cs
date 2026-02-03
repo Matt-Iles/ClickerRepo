@@ -34,7 +34,7 @@ namespace Clicker.Tests
             bool bought = gs.TryBuyClickPower();
 
             Assert.True(bought);
-            Assert.True(gs.ClickPowerLevel > 1);
+            Assert.True(gs.ClickPowerLevel == 2);
             Assert.Equal(100L - cost, gs.Points);
         }
 
@@ -92,14 +92,16 @@ namespace Clicker.Tests
             //get base cost for clicker
             long baseCostClicker = (long)(gs.ClickPowerBaseCost * gs.ClickPowerCostMultiplier);
 
-            // get base cost for tier 0 via the public info method (safer than reflecting internal list)
+            // get base cost for each auto-clicker tier via the public info method
             var tierInfos = gs.GetAutoClickerTierInfos();
             long baseCostTier0 = tierInfos[0].NextCost;
             long baseCostTier1 = tierInfos[1].NextCost;
             long baseCostTier2 = tierInfos[2].NextCost;
             long baseCostTier3 = tierInfos[3].NextCost;
+            long baseCostTier4 = tierInfos[4].NextCost;
 
-            long totalCost = baseCostClicker + baseCostTier0 + baseCostTier1 + baseCostTier2 + baseCostTier3;
+            // total cost to buy one of each
+            long totalCost = baseCostClicker + baseCostTier0 + baseCostTier1 + baseCostTier2 + baseCostTier3 + baseCostTier4;
 
             // Test with enough points to buy 1 of each upgrade
             var prop = typeof(GameState).GetProperty("Points", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
@@ -126,15 +128,79 @@ namespace Clicker.Tests
             totalCost -= baseCostTier3;
             Assert.Equal(totalCost, gs.Points);
 
+            gs.TryBuyAutoClickerTier(4);
+            totalCost -= baseCostTier4;
+            Assert.Equal(totalCost, gs.Points);
         }
 
 
         //Test that Reset clears points and upgrades
+        [Fact]
+        public void Reset_clears_points_and_upgrades()
+        {
+            var gs = new GameState();
 
+            //give some points and buy some upgrades
+            var prop = typeof(GameState).GetProperty("Points", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            prop!.SetValue(gs, 10000L);
+
+            // Buy some upgrades and verify they were bought
+            Assert.True(gs.TryBuyClickPower());
+            Assert.True(gs.TryBuyAutoClickerTier(0));
+            Assert.True(gs.TryBuyAutoClickerTier(1));
+
+            // Now reset
+            gs.Reset();
+
+            // Verify state is back to initial
+            Assert.Equal(0, gs.Points);
+            Assert.Equal(1, gs.ClickPowerLevel);
+
+            // Verify all auto-clicker counts are zero
+            var tierInfos = gs.GetAutoClickerTierInfos();
+            foreach (var info in tierInfos)
+            {
+                Assert.Equal(0, info.Count);
+            }
+        }
 
         //Test that checks seperatly buying click power and max click power
+        [Fact]
+        public void BuyClickPowerAndMaxClickPower()
+        {
+            var gs = new GameState();
+
+            //get base cost for clicker
+            long baseCostClicker = (long)(gs.ClickPowerBaseCost * gs.ClickPowerCostMultiplier);
+
+            // Test with enough points to buy 1 click power upgrade
+            var prop = typeof(GameState).GetProperty("Points", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            prop!.SetValue(gs, baseCostClicker * 10); // enough for multiple upgrades
+
+            long expectedPoints = (baseCostClicker * 10) - baseCostClicker;
+
+            // Buy one click power upgrade
+            Assert.True(gs.TryBuyClickPower());
+            Assert.Equal(expectedPoints, gs.Points);
+            Assert.True(gs.ClickPowerLevel == 2);
+
+            // Now buy max click power upgrades
+            int initialLevel = gs.ClickPowerLevel;
+            Assert.True(gs.TryBuyMaxClickPower());
+            Assert.True(gs.ClickPowerLevel > initialLevel);
 
 
-        //Test that checks seperatly buying autoclick  and max autoclick
+            // Calculate expected points after max purchase
+            long totalCost = 0;
+            for (int i = 0; i < gs.ClickPowerLevel - initialLevel; i++)
+            {
+                totalCost += (long)(gs.ClickPowerBaseCost * Math.Pow(gs.ClickPowerCostMultiplier, initialLevel + i - 1));
+                //      double raw = ClickPowerBaseCost * Math.Pow(ClickPowerCostMultiplier, ClickPowerLevel);
+            }
+            expectedPoints -= totalCost;
+            Assert.Equal(expectedPoints, gs.Points);
+        }
+
+        //Test that checks seperatly buying autoclick and max autoclick
     }
 }
