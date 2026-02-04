@@ -54,13 +54,13 @@
             gameTimer = new System.Windows.Forms.Timer(components);
             clicksPerSecLabel = new Label();
             pointsPerClickLabel = new Label();
-            menuStrip1 = new MenuStrip();
+            menuStrip = new MenuStrip();
             exitGameToolStripMenuItem = new ToolStripMenuItem();
             resetGameToolStripMenuItem = new ToolStripMenuItem();
             headerGroupBox.SuspendLayout();
             groupBox1.SuspendLayout();
             upgradesPage.SuspendLayout();
-            menuStrip1.SuspendLayout();
+            menuStrip.SuspendLayout();
             SuspendLayout();
             // 
             // clickButton
@@ -339,16 +339,16 @@
             pointsPerClickLabel.TabIndex = 6;
             pointsPerClickLabel.Text = "Points Per Click:";
             // 
-            // menuStrip1
+            // menuStrip
             // 
-            menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { exitGameToolStripMenuItem, resetGameToolStripMenuItem });
-            menuStrip1.Location = new Point(0, 0);
-            menuStrip1.Name = "menuStrip1";
-            menuStrip1.Padding = new Padding(5, 2, 0, 2);
-            menuStrip1.Size = new Size(1014, 24);
-            menuStrip1.TabIndex = 7;
-            menuStrip1.Text = "menuStrip1";
+            menuStrip.ImageScalingSize = new Size(20, 20);
+            menuStrip.Items.AddRange(new ToolStripItem[] { exitGameToolStripMenuItem, resetGameToolStripMenuItem });
+            menuStrip.Location = new Point(0, 0);
+            menuStrip.Name = "menuStrip";
+            menuStrip.Padding = new Padding(5, 2, 0, 2);
+            menuStrip.Size = new Size(1014, 24);
+            menuStrip.TabIndex = 7;
+            menuStrip.Text = "menuStrip1";
             // 
             // exitGameToolStripMenuItem
             // 
@@ -374,9 +374,9 @@
             Controls.Add(groupBox1);
             Controls.Add(headerGroupBox);
             Controls.Add(clickButton);
-            Controls.Add(menuStrip1);
+            Controls.Add(menuStrip);
             FormBorderStyle = FormBorderStyle.None;
-            MainMenuStrip = menuStrip1;
+            MainMenuStrip = menuStrip;
             Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
             Text = "Form1";
@@ -386,8 +386,8 @@
             groupBox1.PerformLayout();
             upgradesPage.ResumeLayout(false);
             upgradesPage.PerformLayout();
-            menuStrip1.ResumeLayout(false);
-            menuStrip1.PerformLayout();
+            menuStrip.ResumeLayout(false);
+            menuStrip.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -410,7 +410,7 @@
         private System.Windows.Forms.Timer gameTimer;
         private Label clicksPerSecLabel;
         private Label pointsPerClickLabel;
-        private MenuStrip menuStrip1;
+        private MenuStrip menuStrip;
         private ToolStripMenuItem resetGameToolStripMenuItem;
         private ToolStripMenuItem exitGameToolStripMenuItem;
         private Button maxButton1;

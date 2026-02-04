@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 using Xunit;
+using static Clicker.GameState;
 
 namespace Clicker.Tests
 {
@@ -192,15 +193,64 @@ namespace Clicker.Tests
 
             // Calculate expected points after max purchase
             long totalCost = 0;
+            var initialLevelTemp = initialLevel;
             for (int i = 0; i < gs.ClickPowerLevel - initialLevel; i++)
             {
-                totalCost += (long)(gs.ClickPowerBaseCost * Math.Pow(gs.ClickPowerCostMultiplier, initialLevel + i - 1));
-                //      double raw = ClickPowerBaseCost * Math.Pow(ClickPowerCostMultiplier, ClickPowerLevel);
+                double raw = gs.ClickPowerBaseCost * Math.Pow(gs.ClickPowerCostMultiplier, initialLevelTemp);
+                totalCost += (long)Math.Ceiling(raw); //converting the value the same as GetClickPowerCost does 22.5 -> 23
+                initialLevelTemp++;
             }
             expectedPoints -= totalCost;
             Assert.Equal(expectedPoints, gs.Points);
         }
 
         //Test that checks seperatly buying autoclick and max autoclick
+        [Fact]
+        public void BuyAutoClickAndMaxAutoClickersLevel1()
+        {
+            var gs = new GameState();
+
+            
+
+            //get base cost for auto level 1
+            long level0AutoClicker = gs.autoClickerTiers[0].BaseCost;
+
+            // Test with enough points to buy 1 auto upgrade
+            var prop = typeof(GameState).GetProperty("Points", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            prop!.SetValue(gs, level0AutoClicker * 15); // enough for multiple upgrades
+
+            long expectedPoints = (level0AutoClicker * 15) - level0AutoClicker;
+
+            // Buy one auto level 1 -index 0 - upgrade and check points deducted and count increased
+            Assert.True(gs.TryBuyAutoClickerTier(0));
+            Assert.Equal(expectedPoints, gs.Points);
+            Assert.True(gs.autoClickerTiers[0].Count == 1);
+
+            //Get updated data set for auto level 1 from GetAutoClickerTierInfos
+            var autoTierInfos = gs.GetAutoClickerTierInfos();
+
+            // Calculate max purchasable for level 1 - index 0
+            long maxPurchasable = autoTierInfos[0].NextMaxCount;
+
+            // Now buy max auto clicker level 1 - index 0 - upgrades
+            int initialLevel = gs.autoClickerTiers[0].Count;
+            Assert.True(gs.TryBuyMaxAutoClicker(0));
+
+            // Verify we bought the max possible
+            Assert.True(gs.autoClickerTiers[0].Count == initialLevel + (int)maxPurchasable);
+
+            // Calculate expected points after max purchase
+            long totalCost = 0;
+            var initialLevelTemp = initialLevel;
+            for (int i = 0; i < gs.autoClickerTiers[0].Count - initialLevel; i++)
+            {
+                totalCost += (long)Math.Ceiling(gs.autoClickerTiers[0].BaseCost * Math.Pow(gs.autoClickerTiers[0].CostMultiplier, initialLevelTemp));
+                initialLevelTemp++;
+            }
+            expectedPoints -= totalCost;
+
+            // Verify points after max purchase
+            Assert.Equal(expectedPoints, gs.Points);
+        }
     }
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Clicker.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b6c29a4c4e0a0c6706e07e56d788c274ef404b9c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+365b57bf43c5d5229be2c1fce4304ed614a4a820")]
 [assembly: System.Reflection.AssemblyProductAttribute("Clicker.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Clicker.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

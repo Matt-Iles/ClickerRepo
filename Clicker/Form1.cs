@@ -32,12 +32,13 @@ namespace Clicker
             _style.StyleButton(upgradeButton0, Color.DarkGray);
             _style.StyleButton(upgradeButton1, Color.DarkGray);
             _style.StyleButton(upgradeButton2, Color.DarkGray);
+            _style.StyleButton(upgradeButton3, Color.DarkGray);
 
             // allow dragging the window by clicking and dragging the form background
-            this.MouseDown += Form1_MouseDown;
+            menuStrip.MouseDown += menuStrip_MouseDown;
         }
 
-        private void Form1_MouseDown(object? sender, MouseEventArgs e)
+        private void menuStrip_MouseDown(object? sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {

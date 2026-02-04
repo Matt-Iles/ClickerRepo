@@ -23,7 +23,7 @@ namespace Clicker
         public int ClickPowerBaseCost { get; } = 10; // base cost for first level
 
         // -------- Auto-clicker tiers --------
-        private class AutoClickerTier
+        internal class AutoClickerTier
         {
             public int Count;
             public long BaseCost;
@@ -38,7 +38,7 @@ namespace Clicker
         }
 
         // Tiers of auto-clickers
-        private readonly List<AutoClickerTier> autoClickerTiers = new()
+        internal readonly List<AutoClickerTier> autoClickerTiers = new()
         {
             new AutoClickerTier { Count = 0, BaseCost = 50, CostMultiplier = 1.2, PointsPerSecondPerUnit = 1 },
             new AutoClickerTier { Count = 0, BaseCost = 150, CostMultiplier = 1.35, PointsPerSecondPerUnit = 2 },
