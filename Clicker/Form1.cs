@@ -274,5 +274,10 @@ namespace Clicker
             }
             RefreshUi();
         }
+
+        private void upgradeLabel3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
