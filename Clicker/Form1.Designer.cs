@@ -54,13 +54,16 @@
             menuStrip = new MenuStrip();
             exitGameToolStripMenuItem = new ToolStripMenuItem();
             resetGameToolStripMenuItem = new ToolStripMenuItem();
+            maxButton4 = new Button();
+            upgradeButton4 = new Button();
+            upgradeLabel4 = new Label();
             menuStrip.SuspendLayout();
             SuspendLayout();
             // 
             // clickButton
             // 
             clickButton.Font = new Font("Segoe UI", 15F, FontStyle.Bold);
-            clickButton.Location = new Point(428, 188);
+            clickButton.Location = new Point(428, 175);
             clickButton.Margin = new Padding(3, 2, 3, 2);
             clickButton.Name = "clickButton";
             clickButton.Size = new Size(161, 72);
@@ -82,10 +85,10 @@
             // pointsLabel
             // 
             pointsLabel.AutoSize = true;
-            pointsLabel.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            pointsLabel.Font = new Font("Segoe UI", 12F);
             pointsLabel.Location = new Point(12, 86);
             pointsLabel.Name = "pointsLabel";
-            pointsLabel.Size = new Size(62, 21);
+            pointsLabel.Size = new Size(55, 21);
             pointsLabel.TabIndex = 2;
             pointsLabel.Text = "Points:";
             // 
@@ -101,6 +104,7 @@
             // 
             // maxButton3
             // 
+            maxButton3.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             maxButton3.Location = new Point(925, 223);
             maxButton3.Margin = new Padding(3, 2, 3, 2);
             maxButton3.Name = "maxButton3";
@@ -112,6 +116,7 @@
             // 
             // upgradeButton3
             // 
+            upgradeButton3.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             upgradeButton3.Location = new Point(872, 223);
             upgradeButton3.Margin = new Padding(3, 2, 3, 2);
             upgradeButton3.Name = "upgradeButton3";
@@ -133,6 +138,7 @@
             // 
             // maxButton2
             // 
+            maxButton2.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             maxButton2.Location = new Point(925, 188);
             maxButton2.Margin = new Padding(3, 2, 3, 2);
             maxButton2.Name = "maxButton2";
@@ -144,6 +150,7 @@
             // 
             // upgradeButton2
             // 
+            upgradeButton2.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             upgradeButton2.Location = new Point(872, 188);
             upgradeButton2.Margin = new Padding(3, 2, 3, 2);
             upgradeButton2.Name = "upgradeButton2";
@@ -165,6 +172,7 @@
             // 
             // maxButton1
             // 
+            maxButton1.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             maxButton1.Location = new Point(925, 153);
             maxButton1.Margin = new Padding(3, 2, 3, 2);
             maxButton1.Name = "maxButton1";
@@ -176,6 +184,7 @@
             // 
             // maxButton0
             // 
+            maxButton0.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             maxButton0.Location = new Point(925, 118);
             maxButton0.Margin = new Padding(3, 2, 3, 2);
             maxButton0.Name = "maxButton0";
@@ -187,17 +196,20 @@
             // 
             // maxClickPowerButton0
             // 
+            maxClickPowerButton0.BackColor = SystemColors.ButtonHighlight;
+            maxClickPowerButton0.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             maxClickPowerButton0.Location = new Point(925, 83);
             maxClickPowerButton0.Margin = new Padding(3, 2, 3, 2);
             maxClickPowerButton0.Name = "maxClickPowerButton0";
             maxClickPowerButton0.Size = new Size(80, 24);
             maxClickPowerButton0.TabIndex = 6;
             maxClickPowerButton0.Text = "MAX";
-            maxClickPowerButton0.UseVisualStyleBackColor = true;
+            maxClickPowerButton0.UseVisualStyleBackColor = false;
             maxClickPowerButton0.Click += maxButtonClickPower_Click;
             // 
             // upgradeButton1
             // 
+            upgradeButton1.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             upgradeButton1.Location = new Point(872, 153);
             upgradeButton1.Margin = new Padding(3, 2, 3, 2);
             upgradeButton1.Name = "upgradeButton1";
@@ -219,6 +231,7 @@
             // 
             // upgradeButton0
             // 
+            upgradeButton0.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             upgradeButton0.Location = new Point(872, 118);
             upgradeButton0.Margin = new Padding(3, 2, 3, 2);
             upgradeButton0.Name = "upgradeButton0";
@@ -230,6 +243,8 @@
             // 
             // upgradeClickPowerButton0
             // 
+            upgradeClickPowerButton0.FlatStyle = FlatStyle.System;
+            upgradeClickPowerButton0.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             upgradeClickPowerButton0.Location = new Point(872, 83);
             upgradeClickPowerButton0.Margin = new Padding(3, 2, 3, 2);
             upgradeClickPowerButton0.Name = "upgradeClickPowerButton0";
@@ -310,11 +325,50 @@
             resetGameToolStripMenuItem.Text = "Reset Game";
             resetGameToolStripMenuItem.Click += resetGameToolStripMenuItem_Click;
             // 
+            // maxButton4
+            // 
+            maxButton4.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            maxButton4.Location = new Point(925, 258);
+            maxButton4.Margin = new Padding(3, 2, 3, 2);
+            maxButton4.Name = "maxButton4";
+            maxButton4.Size = new Size(80, 24);
+            maxButton4.TabIndex = 17;
+            maxButton4.Text = "MAX";
+            maxButton4.UseVisualStyleBackColor = true;
+            maxButton4.Click += maxButton4_Click;
+            // 
+            // upgradeButton4
+            // 
+            upgradeButton4.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            upgradeButton4.Location = new Point(872, 258);
+            upgradeButton4.Margin = new Padding(3, 2, 3, 2);
+            upgradeButton4.Name = "upgradeButton4";
+            upgradeButton4.Size = new Size(47, 24);
+            upgradeButton4.TabIndex = 16;
+            upgradeButton4.Text = "BUY";
+            upgradeButton4.UseVisualStyleBackColor = true;
+            upgradeButton4.Click += upgradeButton4_Click;
+            // 
+            // upgradeLabel4
+            // 
+            upgradeLabel4.AutoSize = true;
+            upgradeLabel4.Font = new Font("Segoe UI", 10F);
+            upgradeLabel4.Location = new Point(610, 258);
+            upgradeLabel4.Name = "upgradeLabel4";
+            upgradeLabel4.Size = new Size(70, 19);
+            upgradeLabel4.TabIndex = 15;
+            upgradeLabel4.Text = "Upgrade4";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.ControlLightLight;
+            BackgroundImageLayout = ImageLayout.None;
             ClientSize = new Size(1014, 499);
+            Controls.Add(maxButton4);
+            Controls.Add(upgradeButton4);
+            Controls.Add(upgradeLabel4);
             Controls.Add(pointsLabel);
             Controls.Add(upgradeLabel);
             Controls.Add(titleLabel);
@@ -337,7 +391,8 @@
             Controls.Add(upgradeButton1);
             Controls.Add(upgradeButton0);
             Controls.Add(upgradeLabel1);
-            FormBorderStyle = FormBorderStyle.None;
+            ForeColor = SystemColors.ControlText;
+            FormBorderStyle = FormBorderStyle.Fixed3D;
             MainMenuStrip = menuStrip;
             Margin = new Padding(3, 2, 3, 2);
             Name = "Form1";
@@ -375,5 +430,8 @@
         private Button maxButton3;
         private Button upgradeButton3;
         private Label upgradeLabel3;
+        private Button maxButton4;
+        private Button upgradeButton4;
+        private Label upgradeLabel4;
     }
 }

@@ -19,12 +19,12 @@ namespace Clicker
         public void StyleButton(Button btn, Color backColor)
         {
             btn.FlatStyle = FlatStyle.Flat;
-            btn.FlatAppearance.BorderSize = 0;
+            btn.FlatAppearance.BorderSize = 1;
             btn.BackColor = backColor;
             btn.ForeColor = Color.Black;
 
-            btn.Region = Region.FromHrgn(Style.NativeMethods.CreateRoundRectRgn(0, 0, btn.Width, btn.Height, 10, 10)
-            );
+
+            //btn.Region = Region.FromHrgn(Style.NativeMethods.CreateRoundRectRgn(0, 0, btn.Width, btn.Height, 10, 10));
         }
     }
 }

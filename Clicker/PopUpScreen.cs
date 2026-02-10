@@ -48,7 +48,7 @@ namespace Clicker
         //window shadow
         private void DropShadow()
         {
-            this.BackColor = Color.White;
+            this.BackColor = Color.LightGray;
             this.FormBorderStyle = FormBorderStyle.None;
         }
     }

@@ -33,6 +33,15 @@ namespace Clicker
             _style.StyleButton(upgradeButton1, Color.DarkGray);
             _style.StyleButton(upgradeButton2, Color.DarkGray);
             _style.StyleButton(upgradeButton3, Color.DarkGray);
+            _style.StyleButton(upgradeButton4, Color.DarkGray);
+
+            _style.StyleButton(maxClickPowerButton0, Color.DarkGray);
+            _style.StyleButton(maxButton0, Color.DarkGray);
+            _style.StyleButton(maxButton1, Color.DarkGray);
+            _style.StyleButton(maxButton2, Color.DarkGray);
+            _style.StyleButton(maxButton3, Color.DarkGray);
+            _style.StyleButton(maxButton4, Color.DarkGray);
+
 
             // allow dragging the window by clicking and dragging the form background
             menuStrip.MouseDown += menuStrip_MouseDown;
@@ -82,41 +91,47 @@ namespace Clicker
             upgradeLabel1.Text = $"Level 2 Auto-Clicker (x{upgradeTierInfos[1].Count}) – Cost: {upgradeTierInfos[1].NextCost:N0}";
             upgradeLabel2.Text = $"Level 3 Auto-Clicker (x{upgradeTierInfos[2].Count}) – Cost: {upgradeTierInfos[2].NextCost:N0}";
             upgradeLabel3.Text = $"Level 4 Auto-Clicker (x{upgradeTierInfos[3].Count}) – Cost: {upgradeTierInfos[3].NextCost:N0}";
+            upgradeLabel4.Text = $"Level 5 Auto-Clicker (x{upgradeTierInfos[4].Count}) – Cost: {upgradeTierInfos[4].NextCost:N0}";
 
             // Cache affordability checks for single buy
             bool canBuyClickPower = _game.Points >= _game.GetClickPowerCost();
             bool canBuyAutoClicker0 = _game.Points >= upgradeTierInfos[0].NextCost;
-            bool canBuyAutoClicker2 = _game.Points >= upgradeTierInfos[1].NextCost;
-            bool canBuyAutoClicker3 = _game.Points >= upgradeTierInfos[2].NextCost;
-            bool canBuyAutoClicker4 = _game.Points >= upgradeTierInfos[3].NextCost;
+            bool canBuyAutoClicker1 = _game.Points >= upgradeTierInfos[1].NextCost;
+            bool canBuyAutoClicker2 = _game.Points >= upgradeTierInfos[2].NextCost;
+            bool canBuyAutoClicker3 = _game.Points >= upgradeTierInfos[3].NextCost;
+            bool canBuyAutoClicker4 = _game.Points >= upgradeTierInfos[4].NextCost;
 
             // Enable/disable buttons
             upgradeClickPowerButton0.Enabled = canBuyClickPower;
             upgradeButton0.Enabled = canBuyAutoClicker0;
-            upgradeButton1.Enabled = canBuyAutoClicker2;
-            upgradeButton2.Enabled = canBuyAutoClicker3;
+            upgradeButton1.Enabled = canBuyAutoClicker1;
+            upgradeButton2.Enabled = canBuyAutoClicker2;
+            upgradeButton3.Enabled = canBuyAutoClicker3;
             upgradeButton3.Enabled = canBuyAutoClicker4;
 
             // Set BackColor using ternary operator
             upgradeClickPowerButton0.BackColor = canBuyClickPower ? Color.White : Color.DarkGray;
             upgradeButton0.BackColor = canBuyAutoClicker0 ? Color.White : Color.DarkGray;
-            upgradeButton1.BackColor = canBuyAutoClicker2 ? Color.White : Color.DarkGray;
-            upgradeButton2.BackColor = canBuyAutoClicker3 ? Color.White : Color.DarkGray;
-            upgradeButton3.BackColor = canBuyAutoClicker4 ? Color.White : Color.DarkGray;
+            upgradeButton1.BackColor = canBuyAutoClicker1 ? Color.White : Color.DarkGray;
+            upgradeButton2.BackColor = canBuyAutoClicker2 ? Color.White : Color.DarkGray;
+            upgradeButton3.BackColor = canBuyAutoClicker3 ? Color.White : Color.DarkGray;
+            upgradeButton4.BackColor = canBuyAutoClicker4 ? Color.White : Color.DarkGray;
 
             // Enable/disable buttons
             maxClickPowerButton0.Enabled = canBuyClickPower;
             maxButton0.Enabled = canBuyAutoClicker0;
-            maxButton1.Enabled = canBuyAutoClicker2;
-            maxButton2.Enabled = canBuyAutoClicker3;
-            maxButton3.Enabled = canBuyAutoClicker4;
+            maxButton1.Enabled = canBuyAutoClicker1;
+            maxButton2.Enabled = canBuyAutoClicker2;
+            maxButton3.Enabled = canBuyAutoClicker3;
+            maxButton4.Enabled = canBuyAutoClicker4;
 
             // Set BackColor using ternary operator
             maxClickPowerButton0.BackColor = canBuyClickPower ? Color.White : Color.DarkGray;
             maxButton0.BackColor = canBuyAutoClicker0 ? Color.White : Color.DarkGray;
-            maxButton1.BackColor = canBuyAutoClicker2 ? Color.White : Color.DarkGray;
-            maxButton2.BackColor = canBuyAutoClicker3 ? Color.White : Color.DarkGray;
-            maxButton3.BackColor = canBuyAutoClicker4 ? Color.White : Color.DarkGray;
+            maxButton1.BackColor = canBuyAutoClicker1 ? Color.White : Color.DarkGray;
+            maxButton2.BackColor = canBuyAutoClicker2 ? Color.White : Color.DarkGray;
+            maxButton3.BackColor = canBuyAutoClicker3 ? Color.White : Color.DarkGray;
+            maxButton4.BackColor = canBuyAutoClicker4 ? Color.White : Color.DarkGray;
 
 
             // Set max button text based on how many can be bought (empty when zero)
@@ -125,14 +140,16 @@ namespace Clicker
             int canMaxBuy1 = (int)upgradeTierInfos[1].NextMaxCount;
             int canMaxBuy2 = (int)upgradeTierInfos[2].NextMaxCount;
             int canMaxBuy3 = (int)upgradeTierInfos[3].NextMaxCount;
+            int canMaxBuy4 = (int)upgradeTierInfos[4].NextMaxCount;
 
             maxClickPowerButton0.Text = canMaxClickBuy0 > 0 ? $"MAX {canMaxClickBuy0}x" : "MAX";
             maxButton0.Text = canMaxBuy0 > 0 ? $"MAX {canMaxBuy0}x" : "MAX";
             maxButton1.Text = canMaxBuy1 > 0 ? $"MAX {canMaxBuy1}x" : "MAX";
             maxButton2.Text = canMaxBuy2 > 0 ? $"MAX {canMaxBuy2}x" : "MAX";
             maxButton3.Text = canMaxBuy3 > 0 ? $"MAX {canMaxBuy3}x" : "MAX";
-        }
+            maxButton4.Text = canMaxBuy4 > 0 ? $"MAX {canMaxBuy4}x" : "MAX";
 
+        }
 
         private void resetGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -150,10 +167,7 @@ namespace Clicker
         {
             var dialog = new PopUpScreen("Exit Game?", "Exit Game");
 
-            if (dialog.ShowDialog() == DialogResult.OK && dialog.UserConfirmed)
-            {
-                Close();
-            }
+            if (dialog.ShowDialog() == DialogResult.OK && dialog.UserConfirmed) { Close(); }
         }
 
 
@@ -161,123 +175,74 @@ namespace Clicker
         private void upgradeClickPowerButton_Click(object sender, EventArgs e)
         {
             bool bought = _game.TryBuyClickPower();
-
-            if (bought)
-            {
-                // Play message to confirm purchase
-                //System.Media.SystemSounds.Exclamation.Play();
-            }
-            RefreshUi();
+            if (bought) { RefreshUi(); }
         }
 
         private void upgradeButton0_Click(object sender, EventArgs e)
         {
             bool bought = _game.TryBuyAutoClickerTier(0);
-
-            if (bought)
-            {
-                // Play message to confirm purchase
-                //System.Media.SystemSounds.Exclamation.Play();
-            }
-            RefreshUi();
+            if (bought) { RefreshUi(); }
         }
         private void upgradeButton1_Click(object sender, EventArgs e)
         {
             bool bought = _game.TryBuyAutoClickerTier(1);
-
-            if (bought)
-            {
-                // Play message to confirm purchase
-                //System.Media.SystemSounds.Exclamation.Play();
-            }
-            RefreshUi();
+            if (bought) { RefreshUi(); }
         }
 
         private void upgradeButton2_Click(object sender, EventArgs e)
         {
             bool bought = _game.TryBuyAutoClickerTier(2);
-
-            if (bought)
-            {
-                // Play message to confirm purchase
-                //System.Media.SystemSounds.Exclamation.Play();
-            }
-            RefreshUi();
+            if (bought) { RefreshUi(); }
         }
 
         private void upgradeButton3_Click(object sender, EventArgs e)
         {
             bool bought = _game.TryBuyAutoClickerTier(3);
-
-            if (bought)
-            {
-                // Play message to confirm purchase
-                //System.Media.SystemSounds.Exclamation.Play();
-            }
-            RefreshUi();
+            if (bought) { RefreshUi(); }
+        }
+        private void upgradeButton4_Click(object sender, EventArgs e)
+        {
+            bool bought = _game.TryBuyAutoClickerTier(4);
+            if (bought){RefreshUi();}
         }
 
         //-------- Max Upgrade Button Click Handlers --------
         private void maxButtonClickPower_Click(object sender, EventArgs e)
         {
             bool bought = _game.TryBuyMaxClickPower();
-            if (bought)
-            {
-                // Play message to confirm purchase
-                //System.Media.SystemSounds.Exclamation.Play();
-            }
-            RefreshUi();
+            if (bought) { RefreshUi(); }
         }
 
         private void maxButton0_Click(object sender, EventArgs e)
         {
             bool bought = _game.TryBuyMaxAutoClicker(0);
-            if (bought)
-            {
-                // Play message to confirm purchase
-                //System.Media.SystemSounds.Exclamation.Play();
-            }
-            RefreshUi();
+            if (bought) { RefreshUi(); }
         }
 
         private void maxButton1_Click(object sender, EventArgs e)
         {
             bool bought = _game.TryBuyMaxAutoClicker(1);
-            if (bought)
-            {
-                // Play message to confirm purchase
-                //System.Media.SystemSounds.Exclamation.Play();
-            }
-            RefreshUi();
+            if (bought) { RefreshUi(); }
         }
 
         private void maxButton2_Click(object sender, EventArgs e)
         {
             bool bought = _game.TryBuyMaxAutoClicker(2);
-            if (bought)
-            {
-                // Play message to confirm purchase
-                //System.Media.SystemSounds.Exclamation.Play();
-            }
-            RefreshUi();
+            if (bought) { RefreshUi(); }
         }
-
-
 
         private void maxButton3_Click(object sender, EventArgs e)
         {
             bool bought = _game.TryBuyMaxAutoClicker(3);
-            if (bought)
-            {
-                // Play message to confirm purchase
-                //System.Media.SystemSounds.Exclamation.Play();
-            }
-            RefreshUi();
+            if (bought) { RefreshUi(); }
         }
 
-        private void upgradeLabel3_Click(object sender, EventArgs e)
+        private void maxButton4_Click(object sender, EventArgs e)
         {
-
+            bool bought = _game.TryBuyMaxAutoClicker(4);
+            if (bought) { RefreshUi(); }
         }
+
+        
     }
 }

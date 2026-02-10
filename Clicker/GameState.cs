@@ -40,11 +40,12 @@ namespace Clicker
         // Tiers of auto-clickers
         internal readonly List<AutoClickerTier> autoClickerTiers = new()
         {
-            new AutoClickerTier { Count = 0, BaseCost = 50, CostMultiplier = 1.2, PointsPerSecondPerUnit = 1 },
-            new AutoClickerTier { Count = 0, BaseCost = 150, CostMultiplier = 1.35, PointsPerSecondPerUnit = 2 },
-            new AutoClickerTier { Count = 0, BaseCost = 400, CostMultiplier = 1.45, PointsPerSecondPerUnit = 4 },
-            new AutoClickerTier { Count = 0, BaseCost = 800, CostMultiplier = 1.6, PointsPerSecondPerUnit = 8 },
-            new AutoClickerTier { Count = 0, BaseCost = 1200, CostMultiplier = 1.85, PointsPerSecondPerUnit = 12 },
+            new AutoClickerTier { Count = 0, BaseCost = 50, CostMultiplier = 1.05, PointsPerSecondPerUnit = 1 },
+            new AutoClickerTier { Count = 0, BaseCost = 150, CostMultiplier = 1.15, PointsPerSecondPerUnit = 3 },
+            new AutoClickerTier { Count = 0, BaseCost = 400, CostMultiplier = 1.2, PointsPerSecondPerUnit = 5 },
+            new AutoClickerTier { Count = 0, BaseCost = 800, CostMultiplier = 1.35, PointsPerSecondPerUnit = 10 },
+            new AutoClickerTier { Count = 0, BaseCost = 1200, CostMultiplier = 1.4, PointsPerSecondPerUnit = 15 },
+            new AutoClickerTier { Count = 0, BaseCost = 1500, CostMultiplier = 1.55, PointsPerSecondPerUnit = 18 },
 
         };
 
